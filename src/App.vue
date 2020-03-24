@@ -6,13 +6,15 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+// import HelloWorld from './components/HelloWorld.vue'
 
 export default {
-  name: 'App',
-  components: {
+  // App.vue---根组件  所有页面都是在App.vue下进行切换的，components或者views文件夹下的带.vue后缀的文件都是子组件
+  name: 'App',// 组件定义名
+  /*components: {
     HelloWorld
-  }
+  },*/
+
 }
 </script>
 

@@ -1,8 +1,12 @@
 import Vue from 'vue'
 import App from './App.vue'
+import router from './router'
 
 Vue.config.productionTip = false
 
+// 入口文件  初始化vue实例并使用需要的插件
 new Vue({
-  render: h => h(App),
-}).$mount('#app')
+  el: '#app',
+  router,
+  render: h => h(App)
+})
