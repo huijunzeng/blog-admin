@@ -9,13 +9,13 @@ Vue.config.productionTip = false
 
 // 全局组件的使用方式  这里项目ui使用element-ui组件
 Vue.use(ElementUI, {
-  size: 'medium' // set element-ui default size
+    size: 'medium' // set element-ui default size
 })
 
 // 入口文件  初始化vue实例并使用需要的插件
 new Vue({
-  el: '#app', // 挂载根组件App.vue的id元素 app
-  store,
-  router,
-  render: h => h(App)
+    el: '#app', // 挂载根组件App.vue的id元素 app
+    store,
+    router,
+    render: h => h(App)
 })

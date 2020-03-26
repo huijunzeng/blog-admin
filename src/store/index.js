@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 // 创建全局变量
-const store = new Vuex.store({
+const store = new Vuex.Store({
 
 })
 
