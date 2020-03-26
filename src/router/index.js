@@ -14,8 +14,8 @@ const routes = [
     },
     {
         path: '/login',
-        component: () => import('@/views/error-page/4012')
-    }
+        component: () => import('@/views/login/index')
+    },
 ]
 
 // 创建路由
@@ -24,7 +24,7 @@ const router = new VueRouter({
     mode: 'hash',
     // process.env 属性返回包含用户环境的对象(process是一个全局变量)
     base: process.env.BASE_URL,
-    routes
+    routes: routes
 })
 
 export default router

@@ -1,36 +1,33 @@
 import axios from 'axios'
 import { MessageBox, Message } from 'element-ui'
-import store from '@/store'
-import { getToken } from '@/utils/auth'
+import store from './store'
+import { getToken } from './auth'
 
-// create an axios instance
+// 创建一个axios实例
 const service = axios.create({
   baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
-  // withCredentials: true, // send cookies when cross-domain requests
-  timeout: 5000 // request timeout
+  timeout: 5000 // 请求超时时间设置  这里设置5秒
 })
 
-// request interceptor
+// 请求拦截器
 service.interceptors.request.use(
   config => {
-    // do something before request is sent
-
+    // 在请求发送之前可以做一些处理
+    // 往请求头添加token
     if (store.getters.token) {
-      // let each request carry token
-      // ['X-Token'] is a custom headers key
-      // please modify it according to the actual situation
-      config.headers['Authorization'] = 'Bearer ' + getToken()
+      config.headers.Authorization = 'Bearer ' + getToken()
     }
     return config
   },
   error => {
-    // do something with request error
+    // 请求失败的处理
     console.log(error) // for debug
+    // Promise是一个类，有3个状态分别是：等待态（默认） 成功态 失败态  成功就执行resolved函数，失败就执行reject函数
     return Promise.reject(error)
   }
 )
 
-// response interceptor
+// 响应拦截器  在响应之前可以做一些处理
 service.interceptors.response.use(
   /**
    * If you want to get http information such as headers or status
@@ -61,9 +58,10 @@ service.interceptors.response.use(
           cancelButtonText: 'Cancel',
           type: 'warning'
         }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
+          // 调取store里的user.js的resetToken方法
+          /*store.dispatch('user/resetToken').then(() => {
             location.reload()
-          })
+          })*/
         })
       }
       return Promise.reject(new Error(res.message || 'Error'))
@@ -72,11 +70,12 @@ service.interceptors.response.use(
     }
   },
   error => {
+    // 响应失败的处理
     console.log('err' + error) // for debug
     Message({
       message: error.message,
       type: 'error',
-      duration: 5 * 1000
+      duration: 5 * 1000 // 提示持续时间
     })
     return Promise.reject(error)
   }
