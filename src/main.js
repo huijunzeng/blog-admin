@@ -7,7 +7,7 @@ import store from './store'
 // 阻止启动生产消息，常用作指令
 Vue.config.productionTip = false
 
-// 全局组件的使用方式
+// 全局组件的使用方式  这里项目ui使用element-ui组件
 Vue.use(ElementUI)
 
 // 入口文件  初始化vue实例并使用需要的插件
