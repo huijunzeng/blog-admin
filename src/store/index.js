@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 Vue.use(Vuex)
 
 // 创建全局变量
-const store = new Vuex.store({
+const store = new Vuex.Store({
     /*状态管理核心
         state里面就是存放项目中需要多组件共享的状态,可以理解为一个方法或变量数组
         mutations就是存放更改state里状态的方法
