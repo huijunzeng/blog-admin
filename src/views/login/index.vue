@@ -78,10 +78,9 @@
 </template>
 
 <script>
-import verificationCode from './components/verificationCode'
-
-export default {
-    components: { verificationCode },
+//import verificationCode from './components/verificationCode'
+/*export default {
+    //components: { verificationCode },
     data() {
         return {
             active: 2,
@@ -149,7 +148,7 @@ export default {
             this.securityCode = val
         }
     }
-}
+}*/
 </script>
 
 <style lang="scss" scoped>

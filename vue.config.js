@@ -1,6 +1,11 @@
 // 使用vue-cli3创建项目,如果需要覆盖webpack的配置，则需要在项目的根目录下新建vue.config.js文件，来配置新的配置。启动项目时，会被自动加载
-//const path = require('path')
-//const webpack = require('webpack')
+
+// path是node.js的路径模块，用来处理路径统一的问题
+const path = require('path')
+
+function resolve(dir) {
+    return path.join(__dirname, dir)
+}
 
 // 导出一个含有配置选项的对象
 module.exports = {
@@ -69,17 +74,17 @@ module.exports = {
 
         // 为所有的 CSS 及其预处理文件开启 CSS Modules。
         // 这个选项不会影响 `*.vue` 文件。
-        modules: false
+        requireModuleExtension: true
     },
 
     // Webpack 相关配置
-    /*configureWebpack: {
+    configureWebpack: {
         // 使用@省略公共路径来import资源  可自定义配置一些其他别名
-        name: name,
+        name: 'blog-admin',
         resolve: {
             alias: {
                 '@': resolve('src')
             }
         }
-    }*/
+    }
 }
