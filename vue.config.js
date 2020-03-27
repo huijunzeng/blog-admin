@@ -34,7 +34,7 @@ module.exports = {
         // 热更新
         hotOnly: false,
         // 使用代理  当前端应用和后端 API 服务器没有运行在同一个主机上，需要在开发环境下将 API 请求代理到 API 服务器
-        // 请求 /api/xxx 接口会被代理请求 http://localhost:8081/xxx, 例如 /api/user 会被代理请求 http://localhost:3000/user
+        // 请求 /api/xxx 接口会被代理请求 http://localhost:8081/xxx, 例如 /api/user 会被代理请求 http://localhost:8081/user
         // 匹配规则可配置多个
         proxy: {
             [process.env.VUE_APP_BASE_API]: {
