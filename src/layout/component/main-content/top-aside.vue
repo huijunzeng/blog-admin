@@ -13,10 +13,10 @@
                     <el-breadcrumb-item
                         :key="route.name"
                         :to="{name:route.name}"
-                        v-if="route.name!='home' && route.meta.name!='首页'"
+                        v-if="route.name!='home' && route.meta.title!='首页'"
                         :class="{'is-last-link':i==crumbList.length-1}"
                     >
-                        {{route.meta.name}}
+                        {{route.meta.title}}
                     </el-breadcrumb-item>
                 </template>
             </transition-group>

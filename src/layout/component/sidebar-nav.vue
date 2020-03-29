@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import DynamicMenu from '@/components/dynamic-menu'
+import DynamicMenu from './dynamic-menu'
 import { mapState } from 'vuex'
 
 export default {

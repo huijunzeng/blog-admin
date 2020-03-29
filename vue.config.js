@@ -44,7 +44,7 @@ module.exports = {
         proxy: {
             [process.env.VUE_APP_BASE_API]: {
                 // 目标代理服务器地址
-                target: 'http://localhost:8081',
+                target: 'http://localhost:8443',
                 // 允许跨域
                 changeOrigin: true,
                 // 如果是https接口，需要配置这个参数为true
@@ -53,7 +53,7 @@ module.exports = {
                 pathRewrite: {
                     // 如果接口不带api，则设置以下，最终效果是/api/login  =>  http://localhost:8081/login
                     // '^/api': '/rest/' 如果接口不带api，则设置以下，最终效果是/api/login  =>  http://localhost:8081/rest/login
-                    '^/api': ''
+                    ['^' + process.env.VUE_APP_BASE_API]: ''
                 }
             },
         },
@@ -86,5 +86,31 @@ module.exports = {
                 '@': resolve('src')
             }
         }
+    },
+    // 调整内部的 webpack 配置。
+    // 查阅 https://github.com/vuejs/vue-docs-zh-cn/blob/master/vue-cli/webpack.md
+    chainWebpack: config => {
+        // 移除 prefetch 插件,解决组件懒加载失效的问题
+        config.plugins.delete('prefetch')
+        // 添加新的svg-sprite-loader处理svgIcon
+        config.module
+            .rule('svgIcon')
+            .test(/\.svg$/)
+            .include.add(resolve('src/icons'))
+            .end()
+            .use('svg-sprite-loader')
+            .loader('svg-sprite-loader')
+            .tap(options => {
+                options = {
+                    symbolId: 'icon-[name]'
+                }
+                return options
+            })
+
+        // 原有的svg图像处理loader添加exclude
+        config.module
+            .rule('svg')
+            .exclude.add(resolve('src/icons'))
+            .end()
     }
 }

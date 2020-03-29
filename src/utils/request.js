@@ -1,10 +1,12 @@
 import axios from 'axios'
 import {MessageBox, Message} from 'element-ui'
-import store from './store'
+import store from '@/store'
 import {getToken} from './auth'
 
-// 创建一个axios实例
+// 封装并配置axios
+// 创建一个axios实例   axios 是一个基于 Promise 用于浏览器和 nodejs 的HTTP客户端，用来发送http请求。
 const service = axios.create({
+    // 可以配置axios的设置，包含基础路径、超时时间等信息（可看源码）
     baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
     timeout: 5000 // 请求超时时间设置  这里设置5秒
 })
@@ -21,7 +23,7 @@ service.interceptors.request.use(
     },
     error => {
         // 请求失败的处理
-        console.log(error) // for debug
+        console.log('request error: ', error) // for debug
         // Promise是一个类，有3个状态分别是：等待态（默认） 成功态 失败态  成功就执行resolved函数，失败就执行reject函数
         return Promise.reject(error)
     }
@@ -40,8 +42,13 @@ service.interceptors.response.use(
      * You can also judge the status by HTTP Status Code
      */
     response => {
-        const res = response.data
-
+        let res;
+        // IE9时response.data是undefined，因此需要使用response.request.responseText(Stringify后的字符串)
+        if (response.data == undefined) {
+            res = JSON.parse(response.request.responseText)
+        } else {
+            res = response.data
+        }
         // if the custom code is not 20000, it is judged as an error.
         if (response.status !== 200) {
             Message({
@@ -71,7 +78,8 @@ service.interceptors.response.use(
     },
     error => {
         // 响应失败的处理
-        console.log('err' + error) // for debug
+        console.log('response error: ', error) // for debug
+        // todo  可根据返回的code细化错误信息提示
         Message({
             message: error.message,
             type: 'error',
