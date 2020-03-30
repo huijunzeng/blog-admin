@@ -2,6 +2,7 @@ import Vue from 'vue'
 import App from '@/App'
 import ElementUI from 'element-ui' //引入element-ui
 import 'element-ui/lib/theme-chalk/index.css' //引入element-ui主题
+import './styles/index.scss'
 import NProgress from 'nprogress' // progress进度条
 import router from '@/router/index'
 import store from '@/store/index'
@@ -21,25 +22,27 @@ Vue.use(ElementUI, {
 // vue路由的全局钩子函数   这里主要用于加载动态路由（登录成功后路由到/路径的home组件之前时，请求后端查询用户权限的接口，然后通过addRoutes生成动态路由，也即home的左侧菜单栏）
 router.beforeEach((to, from, next) => {
     console.log("start permission")
+    NProgress.start() //显示进度条
     if (!store.state.UserToken) {
         if (to.matched.length > 0 && !to.matched.some(record => record.meta.requiresAuth)) {
             next()
         } else {
             next({ path: '/login' })
-            NProgress.done()
+            // next()
+            NProgress.done() //完成进度条
         }
     } else {
         if (!store.state.permission.permissionList) {
             store.dispatch('permission/FETCH_PERMISSION').then(() => {
                 next({ path: to.path })
-                NProgress.done()
+                NProgress.done() //完成进度条
             })
         } else {
             if (to.path !== '/login') {
                 next()
             } else {
                 next(from.fullPath)
-                NProgress.done()
+                NProgress.done() //完成进度条
             }
         }
     }
@@ -47,7 +50,7 @@ router.beforeEach((to, from, next) => {
 
 router.afterEach(() => {
     // finish progress bar
-    NProgress.done()
+    NProgress.done() //完成进度条
 })
 
 

@@ -79,7 +79,7 @@ export default {
                 let data = response.data
                 // 将token保存到storage
                 console.log("token: " + data)
-                //this.$store.commit('LOGIN_IN', data)
+                this.$store.commit('LOGIN_IN', data)
                 // 登录成功后，路由到首页
                 this.$router.replace('/')
             } catch (e) {
