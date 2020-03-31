@@ -27,8 +27,10 @@
 
 <script>
 import { login } from '@/api/user'
+import { setToken } from '@/utils/auth'
 export default {
     data() {
+        // 检验规则
         const validateUsername = (rule, value, callback) => {
             if (value.length < 5) {
                 callback(new Error('请输入正确的用户名'))
@@ -57,7 +59,11 @@ export default {
                     }
                 ],
                 password: [
-                    { required: true, trigger: 'blur', validator: validatePass }
+                    {
+                        required: true,
+                        trigger: 'blur',
+                        validator: validatePass
+                    }
                 ]
             },
             loading: false,
@@ -78,12 +84,14 @@ export default {
                 console.log("response: " + response)
                 let data = response.data
                 // 将token保存到storage
-                console.log("token: " + data)
-                this.$store.commit('LOGIN_IN', data)
+                let token = JSON.parse(data).token
+                console.log("token: " + token)
+                this.$store.commit('SET_TOKEN', token)
+                setToken(token)
                 // 登录成功后，路由到首页
                 this.$router.replace('/')
             } catch (e) {
-                console.log(e)
+                console.error(e)
             }
         }
     }

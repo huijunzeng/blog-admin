@@ -22,17 +22,20 @@ Vue.use(ElementUI, {
 // vue路由的全局钩子函数   这里主要用于加载动态路由（登录成功后路由到/路径的home组件之前时，请求后端查询用户权限的接口，然后通过addRoutes生成动态路由，也即home的左侧菜单栏）
 router.beforeEach((to, from, next) => {
     console.log("start permission")
+    console.log("to.matched：" + to.matched)
     NProgress.start() //显示进度条
-    if (!store.state.UserToken) {
+    if (!store.state.UserToken) {// 没有token
+        // to.matched包含所有路由信息的数组  如果路由的mate中有requiresAuth(需要权限的) 那么就返回true   some方法：有一个满足就返回true
         if (to.matched.length > 0 && !to.matched.some(record => record.meta.requiresAuth)) {
-            next()
+            next() //进入下一步
         } else {
+            // 需要权限的，重定向到登录页面
             next({ path: '/login' })
-            // next()
             NProgress.done() //完成进度条
         }
     } else {
-        if (!store.state.permission.permissionList) {
+        console.log("store.state.permission.permissionList：" + store.state.permission.permissionList)
+        if (!store.state.permission.permissionList) {// 没有路由集合时，重新获取
             store.dispatch('permission/FETCH_PERMISSION').then(() => {
                 next({ path: to.path })
                 NProgress.done() //完成进度条
@@ -40,7 +43,9 @@ router.beforeEach((to, from, next) => {
         } else {
             if (to.path !== '/login') {
                 next()
+                NProgress.done() //完成进度条
             } else {
+                console.log("from.fullPath：" + from.fullPath)
                 next(from.fullPath)
                 NProgress.done() //完成进度条
             }

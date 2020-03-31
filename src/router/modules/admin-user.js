@@ -1,9 +1,12 @@
 /** When your routing table is too long, you can split it into small modules**/
 
+import Layout from '@/layout'
+
 const systemRouter = {
     path: '/admin-user',
-    component: () => import('@/views/admin-user'),
-    name: 'system',
+    component: Layout,
+    redirect: '/admin-user/user',
+    name: 'admin-user',
     meta: {
         title: '权限管理',
         icon: 'table'
@@ -32,7 +35,7 @@ const systemRouter = {
             name: 'resource-manage',
             component: () => import('@/views/admin-user/resource'),
             meta: {
-                title: '菜单管理',
+                title: '资源管理',
                 icon: 'tree'
             }
         }

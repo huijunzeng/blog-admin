@@ -18,7 +18,7 @@ export function login(data) {
     })
 }
 
-export function getInfo(username) {
+export function getUserInfo(username) {
     return request({
         url: '/admin-user/user',
         method: 'get',

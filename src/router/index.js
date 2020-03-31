@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import devopsRouter from './modules/devops'
+import adminUserRouter from './modules/admin-user'
 
 import Layout from '@/layout'
 Vue.use(VueRouter)
@@ -54,6 +55,7 @@ export const baseRoutes = [
 /* 需要权限判断的路由 */
 export const dynamicRoutes = [
     devopsRouter,
+    adminUserRouter,
     /*{
         path: '/order',
         component: Order,

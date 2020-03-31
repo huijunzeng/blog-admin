@@ -1,19 +1,16 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
+import { login, logout, getUserInfo } from '@/api/user'
 
 const state = {
     token: getToken(),
     name: '',
-    avatar: '',
-    introduction: '',
-    roles: []
+    avatar: '', // 头像
+    roles: [] // 用户角色
 }
 
 const mutations = {
     SET_TOKEN: (state, token) => {
         state.token = token
-    },
-    SET_INTRODUCTION: (state, introduction) => {
-        state.introduction = introduction
     },
     SET_NAME: (state, name) => {
         state.name = name

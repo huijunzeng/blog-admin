@@ -8,18 +8,10 @@ export default {
         permissionList: null /** 所有路由 */,
         sidebarMenu: [] /** 导航菜单 */,
         currentMenu: '' /** 当前active导航菜单 */,
-        control_list: [] /** 完整的权限列表 */,
-        avatar: ''/** 头像 */,
-        account: ''/** 用户角色 */
+        control_list: [] /** 完整的权限列表 */
     },
     getters: {},
     mutations: {
-        SET_AVATAR(state, avatar) {
-            state.avatar = avatar
-        },
-        SET_ACCOUNT(state, account) {
-            state.account = account
-        },
         SET_PERMISSION(state, routes) {
             state.permissionList = routes
         },
