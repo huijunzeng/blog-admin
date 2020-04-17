@@ -127,7 +127,7 @@
 </template>
 
 <script>
-import { getRoleList, getAllPermissiion } from '@/api/permission'
+//import { getRoleList, getAllPermissiion } from '@/api/permission'
 export default {
     data() {
         return {

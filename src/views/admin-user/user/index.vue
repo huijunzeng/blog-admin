@@ -151,8 +151,8 @@
   </el-card>
 </template>
 <script>
-import { getUserList } from '@/api/permission'
-import moment from 'moment'
+//import { getUserList } from '@/api/permission'
+//import moment from 'moment'
 export default {
     data() {
         return {
