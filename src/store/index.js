@@ -4,8 +4,25 @@ import Vuex from 'vuex'
 // vuex全局状态管理  可以利用其store对象存储一些全局变量
 Vue.use(Vuex)
 
+// https://webpack.js.org/guides/dependency-management/#requirecontext
+const modulesFiles = require.context('./modules', true, /\.js$/)
+
+// you do not need `import app from './modules/app'`
+// it will auto require all vuex module from modules file
+const modules = modulesFiles.keys().reduce((modules, modulePath) => {
+    // set './app.js' => 'app'
+    const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
+    const value = modulesFiles(modulePath)
+    modules[moduleName] = value.default
+    console.log("modules: " +modules)
+    return modules
+}, {})
+
+
 // 创建全局变量
 const store = new Vuex.Store({
+    modules
+
     /*Vuex状态管理核心
         state里面就是存放项目中需要多组件共享的状态,可以理解为一个方法或变量数组，类似于Vue的data属性
         mutations就是存放更改state里状态的方法

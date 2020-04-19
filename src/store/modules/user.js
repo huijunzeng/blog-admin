@@ -1,9 +1,10 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { login, logout, getUserInfo } from '@/api/user'
+import router from '@/router'
 
 const state = {
     token: getToken(),
-    name: '',
+    username: '',
     avatar: '', // 头像
     roles: [] // 用户角色
 }
@@ -12,8 +13,8 @@ const mutations = {
     SET_TOKEN: (state, token) => {
         state.token = token
     },
-    SET_NAME: (state, name) => {
-        state.name = name
+    SET_USERNAME: (state, username) => {
+        state.username = username
     },
     SET_AVATAR: (state, avatar) => {
         state.avatar = avatar
@@ -25,22 +26,36 @@ const mutations = {
 
 const actions = {
     // user login
-    /*login({ commit }, userInfo) {
-        const { username, password } = userInfo
+    login({ commit }, loginForm) {
         return new Promise((resolve, reject) => {
+            const { username, password } = loginForm
             login({ username: username.trim(), password: password }).then(response => {
-                commit('SET_TOKEN', response.access_token)
-                setToken(response.access_token)
+                console.log("data: " + response.data);
+                const data = JSON.parse(response.data)
+                commit('SET_TOKEN', data.access_token)
+                commit('SET_USERNAME', data.username)
+                setToken(data.access_token)
                 resolve()
             }).catch(error => {
                 console.error(error)
                 reject(error)
             })
         })
+            /*console.log("response.data: " + response.data)
+            let data = response.data
+            // 将token保存到storage
+            let token = JSON.parse(data).access_token
+            console.log("token: " + token)
+            this.$store.dispatch('user/setToken', token)
+            setToken(token)
+            // 登录成功后，路由到首页
+            //commit('SET_AVATAR', permissionList.avatar)
+            //commit('SET_ACCOUNT', permissionList.name)
+            this.$router.replace('/')*/
     },
 
     // get user info
-    getInfo({ commit, state }) {
+   /* getInfo({ commit, state }) {
         return new Promise((resolve, reject) => {
             getInfo(state.token).then(response => {
                 const { data } = response

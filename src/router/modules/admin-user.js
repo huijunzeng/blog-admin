@@ -1,6 +1,6 @@
 /** When your routing table is too long, you can split it into small modules**/
 
-import Layout from '@/layout'
+import Layout from '@/layout' //整体页面布局
 
 const systemRouter = {
     path: '/admin-user',
@@ -8,9 +8,10 @@ const systemRouter = {
     redirect: '/admin-user/user',
     name: 'admin-user',
     meta: {
-        title: '权限管理',
-        icon: 'table'
+        title: '权限管理', //路由名
+        icon: 'table' //对应的icon图标
     },
+    //多级菜单的子路由
     children: [
         {
             path: 'user',

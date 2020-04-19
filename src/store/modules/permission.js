@@ -1,6 +1,5 @@
-import { getUser } from '@/api/admin-user/user'
+import { getResourceByUsername } from '@/api/admin-user/resource'
 import router, { dynamicRoutes } from '@/router/index'
-import { recursionRouter } from '@/utils/recursion-router'
 
 export default {
     namespaced: true,
@@ -32,16 +31,19 @@ export default {
         }
     },
     actions: {
-        async FETCH_PERMISSION({ commit }) {
-            // todo
-            let permissionList = await getUser("admin")
-            commit('SET_AVATAR', permissionList.avatar)
-            commit('SET_ACCOUNT', permissionList.name)
-            let routes = recursionRouter(permissionList.data, dynamicRoutes)
+        async FETCH_PERMISSION({ commit }, username) {
+            console.log("username: " + username);
+            let response = await getResourceByUsername(username)
+            console.log("permissionList: " + response.data);
+            let routes = recursionRouter(JSON.parse(response.data), dynamicRoutes)
+            console.log("dynamicRoutes: " + dynamicRoutes);
+            console.log("routes: " + routes);
             let MainContainer = dynamicRoutes.find(v => v.path === '')
             let children = MainContainer.children
+            console.log("children: " + children);
             commit('SET_CONTROL_LIST', [...children, ...dynamicRoutes])
             children.push(...routes)
+            console.log("after children: " + children);
             commit('SET_MENU', children)
             let initialRoutes = router.options.routes
             router.addRoutes(dynamicRoutes)
@@ -49,3 +51,42 @@ export default {
         }
     }
 }
+
+/**
+ * @param  {Array} userRouter 后台返回的用户权限json
+ * @param  {Array} allRouter  前端配置好的所有动态路由的集合
+ * @return {Array} realRoutes 过滤后的路由
+ */
+export function recursionRouter(userRouter = [], allRouter = []) {
+    for (let i = 0; i < userRouter.length; i++) {
+        console.log("userRouter: " + userRouter[i].name)
+    }
+    for (let i = 0; i < allRouter.length; i++) {
+        console.log("allRouter: " + allRouter[i].name)
+    }
+    var realRoutes = allRouter
+        .filter(item => userRouter.includes(item.name))
+        .map(item => ({
+            ...item,
+            children: item.children
+                ? recursionRouter(userRouter, item.children)
+                : null
+        }))
+    console.log("realRoutes:" + realRoutes)
+    return realRoutes
+}
+
+/**
+ *
+ * @param {Array} routes 用户过滤后的路由
+ * 递归为所有有子路由的路由设置第一个children.path为默认路由
+ */
+export function setDefaultRoute(routes) {
+    routes.forEach((v, i) => {
+        if (v.children && v.children.length > 0) {
+            v.redirect = { name: v.children[0].name }
+            setDefaultRoute(v.children)
+        }
+    })
+}
+

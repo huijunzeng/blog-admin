@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import devopsRouter from './modules/devops'
 import adminUserRouter from './modules/admin-user'
 
-import Layout from '@/layout'
+import Layout from '@/layout' //整体页面布局
 Vue.use(VueRouter)
 
 // 基础路由集合（不需要权限） 定义请求路径跳转到指定的组件

@@ -16,7 +16,7 @@ service.interceptors.request.use(
     config => {
         // 在请求发送之前可以做一些处理
         // 往请求头添加token
-        if (store.getters.token) {
+        if (store.state.user.token) {
             config.headers.Authorization = 'Bearer ' + getToken()
         }
         return config

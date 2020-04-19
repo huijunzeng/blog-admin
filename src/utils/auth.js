@@ -7,7 +7,7 @@ const TokenKey = 'Admin-Token'
  * @returns {*}
  */
 export const getToken = () => {
-    return getStore(TokenKey)
+    return getStore(TokenKey, true)
 }
 
 export const setToken = token => {

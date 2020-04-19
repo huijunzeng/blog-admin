@@ -8,6 +8,23 @@ export function getResourceList(data) {
     })
 }
 
+export function getResourceByUsername(username) {
+    return request({
+        url: '/admin-user/resource/user/' + username,
+        method: 'get'
+    })
+}
+
+export function getResourceByUserId(userId) {
+    return request({
+        url: '/admin-user/resource',
+        method: 'get',
+        params: {
+            userId: userId
+        }
+    })
+}
+
 export function getResource(id) {
     return request({
         url: '/admin-user/resource/' + id,

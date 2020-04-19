@@ -17,7 +17,7 @@
                 <span class="show-pwd" @click="showPwd"><svg-icon icon-class="eye" /></span>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="login">
+                <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="loginHandler">
                     Sign in
                 </el-button>
             </el-form-item>
@@ -26,8 +26,7 @@
 </template>
 
 <script>
-import { login } from '@/api/user'
-import { setToken } from '@/utils/auth'
+
 export default {
     data() {
         // 检验规则
@@ -78,21 +77,16 @@ export default {
                 this.pwdType = 'password'
             }
         },
-        async login() {
-            try {
-                let response = await login(this.loginForm)
-                console.log("response: " + response)
-                let data = response.data
-                // 将token保存到storage
-                let token = JSON.parse(data).token
-                console.log("token: " + token)
-                this.$store.commit('SET_TOKEN', token)
-                setToken(token)
-                // 登录成功后，路由到首页
-                this.$router.replace('/')
-            } catch (e) {
-                console.error(e)
-            }
+        async loginHandler() {
+            console.log(this.loginForm.username)
+            this.$store.dispatch('user/login', this.loginForm)
+                .then(() => {
+                    this.$router.push('/') //登录成功后重定向到首页
+                    this.loading = false
+                })
+                .catch(() => {
+                    this.loading = false
+                })
         }
     }
 }
