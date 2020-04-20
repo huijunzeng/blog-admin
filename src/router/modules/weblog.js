@@ -3,10 +3,10 @@
 import Layout from '@/layout' //整体页面布局
 
 const weblogRouter = {
-    path: '/admin-user',
+    path: '/weblog-manage',
     component: Layout,
-    redirect: '/admin-user/user',
-    name: 'admin-user',
+    redirect: '/weblog-manage/article',
+    name: 'weblog-manage',
     meta: {
         title: '博客管理', //路由名
         icon: 'table' //对应的icon图标
@@ -14,30 +14,21 @@ const weblogRouter = {
     //多级菜单的子路由
     children: [
         {
-            path: 'user',
-            name: 'user-manage',
-            component: () => import('@/views/admin-user/user'),
+            path: 'article',
+            name: 'article-manage',
+            component: () => import('@/views/admin/user'),
             meta: {
-                title: '用户管理',
+                title: '文章管理',
                 icon: 'table'
             }
         },
         {
-            path: 'role',
-            name: 'role-manage',
-            component: () => import('@/views/admin-user/role'),
+            path: 'comment',
+            name: 'comment-manage',
+            component: () => import('@/views/admin/role'),
             meta: {
-                title: '角色管理',
+                title: '评论管理',
                 icon: 'eye'
-            }
-        },
-        {
-            path: 'resource',
-            name: 'resource-manage',
-            component: () => import('@/views/admin-user/resource'),
-            meta: {
-                title: '资源管理',
-                icon: 'tree'
             }
         }
     ]

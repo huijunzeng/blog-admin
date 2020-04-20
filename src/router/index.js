@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import devopsRouter from './modules/devops'
-import adminUserRouter from './modules/admin-user'
+import adminUserRouter from './modules/admin'
 import weblogRouter from './modules/weblog'
 
 import Layout from '@/layout' //整体页面布局
@@ -34,7 +34,8 @@ export const baseRoutes = [
     {
         path: '/notFound',
         name: 'NotFound',
-        component: () => import('@/views/error-page/4012')
+        component: () => import('@/views/error-page/4012'),
+        hidden: true
     },
     {
         path: '/login',

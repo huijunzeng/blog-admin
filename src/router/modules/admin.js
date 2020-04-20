@@ -3,10 +3,10 @@
 import Layout from '@/layout' //整体页面布局
 
 const systemRouter = {
-    path: '/admin-user',
+    path: '/admin',
     component: Layout,
-    redirect: '/admin-user/user',
-    name: 'admin-user',
+    redirect: '/admin/user',
+    name: 'admin',
     meta: {
         title: '权限管理', //路由名
         icon: 'table' //对应的icon图标
@@ -16,7 +16,7 @@ const systemRouter = {
         {
             path: 'user',
             name: 'user-manage',
-            component: () => import('@/views/admin-user/user'),
+            component: () => import('@/views/admin/user'),
             meta: {
                 title: '用户管理',
                 icon: 'table'
@@ -25,7 +25,7 @@ const systemRouter = {
         {
             path: 'role',
             name: 'role-manage',
-            component: () => import('@/views/admin-user/role'),
+            component: () => import('@/views/admin/role'),
             meta: {
                 title: '角色管理',
                 icon: 'eye'
@@ -34,7 +34,7 @@ const systemRouter = {
         {
             path: 'resource',
             name: 'resource-manage',
-            component: () => import('@/views/admin-user/resource'),
+            component: () => import('@/views/admin/resource'),
             meta: {
                 title: '资源管理',
                 icon: 'tree'

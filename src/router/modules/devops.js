@@ -75,6 +75,15 @@ const devopsRouter = {
                 icon: 'link'
             }
         },
+        {
+            path: '/devops/xxljob',
+            name: 'xxljob',
+            component: () => import('@/views/devops/xxljob'),
+            meta: {
+                title: '任务调度中心',
+                icon: 'link'
+            }
+        }
     ]
 }
 
