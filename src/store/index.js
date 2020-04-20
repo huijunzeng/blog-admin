@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import getters from './getters';
 
 // vuex全局状态管理  可以利用其store对象存储一些全局变量
 Vue.use(Vuex)
@@ -21,7 +22,8 @@ const modules = modulesFiles.keys().reduce((modules, modulePath) => {
 
 // 创建全局变量
 const store = new Vuex.Store({
-    modules
+    modules,
+    getters
 
     /*Vuex状态管理核心
         state里面就是存放项目中需要多组件共享的状态,可以理解为一个方法或变量数组，类似于Vue的data属性

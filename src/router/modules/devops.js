@@ -13,56 +13,11 @@ const devopsRouter = {
     },
     children: [
         {
-            path: '/devops/nacos/register',
+            path: '/devops/nacos',
             name: 'Register',
-            component: Layout,
+            component: () => import('@/views/devops/nacos'),
             meta: {
-                title: '注册中心',
-                icon: 'link'
-            },
-            children: [
-                {
-                    path: 'http://129.211.34.120:8848/nacos',
-                    meta: {
-                        title: '注册中心',
-                        icon: 'link'
-                    }
-                }
-            ]
-        },
-        {
-            path: '/devops/nacos/config',
-            name: 'Config',
-            component: Layout,
-            meta: {
-                title: '配置中心',
-                icon: 'link'
-            },
-            children: [
-                {
-                    path: 'http://129.211.34.120:8848/nacos',
-                    meta: {
-                        title: '配置中心',
-                        icon: 'link'
-                    }
-                }
-            ]
-        },
-       /* {
-            path: '/devops/sentinel',
-            name: 'SentinelDashBoard',
-            component: () => import('@/views/devops/sentinel'),
-            meta: {
-                title: '服务运维',
-                icon: 'link'
-            }
-        },
-        {
-            path: '/devops/moss',
-            name: 'Moss',
-            component: () => import('@/views/devops/moss'),
-            meta: {
-                title: '服务管理',
+                title: '注册与配置中心',
                 icon: 'link'
             }
         },
@@ -71,10 +26,55 @@ const devopsRouter = {
             name: 'Swagger',
             component: () => import('@/views/devops/swagger'),
             meta: {
-                title: '聚合文档',
+                title: 'swagger接口文档',
                 icon: 'link'
             }
-        }*/
+        },
+        {
+            path: '/devops/portainer',
+            name: 'Portainer',
+            component: () => import('@/views/devops/portainer'),
+            meta: {
+                title: '容器管理',
+                icon: 'link'
+            }
+        },
+        {
+            path: '/devops/rabbitmq',
+            name: 'RabbitMQ',
+            component: () => import('@/views/devops/rabbitmq'),
+            meta: {
+                title: '消息队列',
+                icon: 'link'
+            }
+        },
+        {
+            path: '/devops/elk',
+            name: 'ELK',
+            component: () => import('@/views/devops/elk'),
+            meta: {
+                title: 'ELK日志系统',
+                icon: 'link'
+            }
+        },
+        {
+            path: '/devops/skywalking',
+            name: 'skywalking',
+            component: () => import('@/views/devops/skywalking'),
+            meta: {
+                title: '链路追踪系统',
+                icon: 'link'
+            }
+        },
+        {
+            path: '/devops/sentinel',
+            name: 'sentinel',
+            component: () => import('@/views/devops/sentinel'),
+            meta: {
+                title: '服务治理',
+                icon: 'link'
+            }
+        },
     ]
 }
 
