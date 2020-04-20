@@ -12,7 +12,7 @@
             :class='v.meta.icon'
           ></i> -->
           <svg-icon v-if="v.meta&&v.meta.icon" :icon-class="v.meta.icon"></svg-icon>
-          <span>{{v.meta.name}}</span>
+          <span>{{v.meta.title}}</span>
         </template>
         <el-menu-item-group>
           <my-nav :menuList='v.children'></my-nav>
@@ -29,7 +29,7 @@
           :class='v.meta.icon'
         ></i> -->
         <svg-icon v-if="v.meta&&v.meta.icon" :icon-class="v.meta.icon"></svg-icon>
-        <span slot='title'>{{v.meta.name}}</span>
+        <span slot='title'>{{v.meta.title}}</span>
       </el-menu-item>
     </template>
   </div>
@@ -48,6 +48,7 @@ export default {
     },
     methods: {
         gotoRoute(name) {
+          console.log("menuList", this.menuList)
             this.$router.push({ name })
         }
     }

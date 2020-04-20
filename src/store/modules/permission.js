@@ -1,5 +1,5 @@
 import { getResourceByUsername } from '@/api/admin-user/resource'
-import router, { dynamicRoutes } from '@/router/index'
+import router, { baseRoutes, dynamicRoutes } from '@/router/index'
 
 export default {
     namespaced: true,
@@ -32,22 +32,29 @@ export default {
     },
     actions: {
         async FETCH_PERMISSION({ commit }, username) {
-            console.log("username: " + username);
+            console.log("username: " , username);
             let response = await getResourceByUsername(username)
-            console.log("permissionList: " + response.data);
-            let routes = recursionRouter(JSON.parse(response.data), dynamicRoutes)
-            console.log("dynamicRoutes: " + dynamicRoutes);
-            console.log("routes: " + routes);
-            let MainContainer = dynamicRoutes.find(v => v.path === '')
+            console.log("permissionList: " , response.data);
+            //let routes = recursionRouter(JSON.parse(response.data), dynamicRoutes)
+            let routes = baseRoutes.concat(dynamicRoutes)
+            console.log("dynamicRoutes: " , dynamicRoutes);
+            console.log("routes: " , routes);
+            //let MainContainer = dynamicRoutes.find(v => v.path === '')
+            let MainContainer = baseRoutes.find(v => v.path === '')
+            console.log("MainContainer:" , MainContainer)
+            console.log("MainContainer.name:", MainContainer.name)
             let children = MainContainer.children
-            console.log("children: " + children);
+            console.log("children: " , children);
             commit('SET_CONTROL_LIST', [...children, ...dynamicRoutes])
-            children.push(...routes)
-            console.log("after children: " + children);
+            //children.push(...routes)
+            children.push(...dynamicRoutes)
+            console.log("after children: " , children);
             commit('SET_MENU', children)
             let initialRoutes = router.options.routes
-            router.addRoutes(dynamicRoutes)
-            commit('SET_PERMISSION', [...initialRoutes, ...dynamicRoutes])
+            //router.addRoutes(dynamicRoutes)
+            router.addRoutes(children)
+            //commit('SET_PERMISSION', [...initialRoutes, ...dynamicRoutes])
+            commit('SET_PERMISSION', children)
         }
     }
 }
@@ -64,6 +71,7 @@ export function recursionRouter(userRouter = [], allRouter = []) {
     for (let i = 0; i < allRouter.length; i++) {
         console.log("allRouter: " + allRouter[i].name)
     }
+    console.log("8888888888888:" + userRouter.includes('admin-user'))
     var realRoutes = allRouter
         .filter(item => userRouter.includes(item.name))
         .map(item => ({

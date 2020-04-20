@@ -153,7 +153,7 @@
 <script>
 //import { getUserList } from '@/api/permission'
 //import moment from 'moment'
-export default {
+/*export default {
     data() {
         return {
             totalRecord: 0,
@@ -315,7 +315,7 @@ export default {
         },
         onDialogSubmit() {}
     }
-}
+}*/
 </script>
 
 <style lang="scss">

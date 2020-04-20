@@ -128,7 +128,7 @@
 
 <script>
 //import { getRoleList, getAllPermissiion } from '@/api/permission'
-export default {
+/*export default {
     data() {
         return {
             form: {
@@ -433,7 +433,7 @@ export default {
             this.roleForm.permissions = [...set].join(',')
         }
     }
-}
+}*/
 </script>
 
 <style>

@@ -96,7 +96,7 @@
 
 <script>
 //import { getFirstLevel, getNextLevel } from '@/api/permission'
-export default {
+/*export default {
     name: 'coolefyCategory',
     data() {
         return {
@@ -314,7 +314,7 @@ export default {
             this.webCategoryId = ''
         }
     }
-}
+}*/
 </script>
 <style lang="scss" scoped>
 .block-icon {

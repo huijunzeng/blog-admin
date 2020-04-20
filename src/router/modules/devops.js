@@ -9,13 +9,17 @@ const devopsRouter = {
     name: 'Devops',
     meta: {
         title: '服务治理',
-        icon: 'chart'
+        icon: 'table'
     },
     children: [
         {
             path: '/devops/nacos/register',
             name: 'Register',
             component: Layout,
+            meta: {
+                title: '注册中心',
+                icon: 'link'
+            },
             children: [
                 {
                     path: 'http://129.211.34.120:8848/nacos',
@@ -30,6 +34,10 @@ const devopsRouter = {
             path: '/devops/nacos/config',
             name: 'Config',
             component: Layout,
+            meta: {
+                title: '配置中心',
+                icon: 'link'
+            },
             children: [
                 {
                     path: 'http://129.211.34.120:8848/nacos',

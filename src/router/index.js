@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import devopsRouter from './modules/devops'
 import adminUserRouter from './modules/admin-user'
+import weblogRouter from './modules/weblog'
 
 import Layout from '@/layout' //整体页面布局
 Vue.use(VueRouter)
@@ -21,7 +22,7 @@ export const baseRoutes = [
             {
                 id: 1,
                 path: 'home',
-                component: () => import('@/views/home/index'),
+                component: () => import('@/views/home/index'), //配置路由懒加载，优化首屏加载缓慢
                 name: 'home',
                 meta: {
                     title: '首页',
@@ -56,6 +57,7 @@ export const baseRoutes = [
 export const dynamicRoutes = [
     devopsRouter,
     adminUserRouter,
+    weblogRouter
     /*{
         path: '/order',
         component: Order,

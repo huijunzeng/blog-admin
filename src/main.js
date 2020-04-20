@@ -7,6 +7,8 @@ import NProgress from 'nprogress' // progress进度条
 import router from '@/router/index'
 import store from '@/store/index'
 import '@/icons' //icon
+import mavonEditor from 'mavon-editor' //markdown编辑器
+import 'mavon-editor/dist/css/index.css'
 require('@/mock/mock.js')
 
 // 阻止启动生产消息，常用作指令
@@ -17,24 +19,28 @@ Vue.use(ElementUI, {
     size: 'medium', // set element-ui default size
     zIndex: 3000 // set element-ui default zIndex
 })
+Vue.use(mavonEditor);
 
 // vue路由的全局钩子函数,拦截路由，不管访问哪个路由都先走这里   这里主要用于加载动态路由（登录成功后路由到/路径的home组件之前时，请求后端查询用户权限的接口，然后通过addRoutes生成动态路由，也即home的左侧菜单栏）
 // to即将要进入的目标 路由对象;（这个对象中包含name，params，meta等属性）
 // from: 当前导航正要离开的路由对象；（这个对象中包含name，params，meta等属性）
 // next: Function: 确保要调用 next 方法，否则钩子就不会被resolved。这个当中还可以传一些参数，具体可以看官方文档
+//const test = ((to, from, next) => {
 router.beforeEach((to, from, next) => {
     console.log("start permission")
     to.matched.forEach(record => console.log(record.name))
     NProgress.start() //显示进度条
     if (store.state.user.token) {// 有token
-        console.log("token：" + store.state.user.token)
+        console.log("token：", store.state.user.token)
         if (store.state.permission.permissionList) {// 有生成动态路由
+            console.log("store.state.permission.permissionList：", store.state.permission.permissionList)
+            console.log("to.path：", to.path)
             if (to.path !== '/login') {
                 next()
                 NProgress.done() //完成进度条
             } else {
                 // fullPath匹配路由，path匹配路径
-                console.log("from.fullPath：" + from.fullPath)
+                console.log("from.fullPath：", from.fullPath)
                 next(from.fullPath)
                 NProgress.done() //完成进度条
             }
@@ -42,7 +48,7 @@ router.beforeEach((to, from, next) => {
             // 没有生成动态路由则根据username重新获取路由集合
             const username = store.state.user.username;
             store.dispatch('permission/FETCH_PERMISSION', username).then(() => {
-                console.log("to.path：" + to.path)
+                console.log("to.path：", to.path)
                 next({path: to.path})
                 NProgress.done() //完成进度条
             })
