@@ -3,9 +3,9 @@
 import Layout from '@/layout' //整体页面布局
 
 const weblogRouter = {
-    path: '/weblog-manage',
+    path: '/weblog',
     component: Layout,
-    redirect: '/weblog-manage/article',
+    redirect: '/weblog/article',
     name: 'weblog-manage',
     meta: {
         title: '博客管理', //路由名
