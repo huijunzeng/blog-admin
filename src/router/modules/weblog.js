@@ -16,7 +16,7 @@ const weblogRouter = {
         {
             path: 'article',
             name: 'article-manage',
-            component: () => import('@/views/admin/user'),
+            component: () => import('@/views/weblog/article'),
             meta: {
                 title: '文章管理',
                 icon: 'table'
@@ -25,7 +25,7 @@ const weblogRouter = {
         {
             path: 'comment',
             name: 'comment-manage',
-            component: () => import('@/views/admin/role'),
+            component: () => import('@/views/weblog/comment'),
             meta: {
                 title: '评论管理',
                 icon: 'eye'

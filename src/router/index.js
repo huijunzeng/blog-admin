@@ -6,6 +6,11 @@ import weblogRouter from './modules/weblog'
 
 import Layout from '@/layout' //整体页面布局
 Vue.use(VueRouter)
+// 重写路由的push方法，处理router.push报错问题
+const VueRouterPush = VueRouter.prototype.push
+VueRouter.prototype.push = function push (to) {
+    return VueRouterPush.call(this, to).catch(err => err)
+}
 
 // 基础路由集合（不需要权限） 定义请求路径跳转到指定的组件
 export const baseRoutes = [

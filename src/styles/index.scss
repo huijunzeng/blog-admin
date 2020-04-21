@@ -3,3 +3,14 @@
 @import './sidebar.scss';
 @import './loading.scss';
 @import url('//at.alicdn.com/t/font_641452_q3ah7ae4qvndn29.css');
+
+.filter-container {
+  padding-bottom: 10px;
+
+  .filter-item {
+    display: inline-block;
+    vertical-align: middle;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
+}

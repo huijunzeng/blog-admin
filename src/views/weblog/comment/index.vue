@@ -174,19 +174,19 @@
   import { queryUser, getUser, createUser, updateUser, deleteUser } from '@/api/admin/user'
   import { getAllRoles } from '@/api/admin/role'
 
-  import waves from '@/directive/waves'
+  //import waves from '@/directive/waves'
 
   export default {
     name: 'userManagement',
     // 水波文效果
-    directives: {
+    /*directives: {
       waves
-    },
+    },*/
     data() {
       return {
         list: null,
         total: 0,
-        listLoading: false,
+        listLoading: true,
         downloadLoading: false,
         // 查询参数
         listQuery: {

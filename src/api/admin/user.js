@@ -1,6 +1,6 @@
 import request from '@/utils/request'
 
-export function getUserList(data) {
+export function queryUserList(data) {
     return request({
         url: '/admin-user/user/list',
         method: 'post',

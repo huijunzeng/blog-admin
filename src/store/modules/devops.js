@@ -4,7 +4,7 @@ const state = {
     // swagger
     swaggerApi: 'http://129.211.34.120:9800/swagger-ui.html',
     // portainer
-    portainerDashboard: 'http://129.211.34.120:9000/',
+    portainerDashboard: 'http://129.211.34.120:9000/#/auth',
     // rabbitmq
     rabbitmqServer: 'http://129.211.34.120:15672/',
     // elk

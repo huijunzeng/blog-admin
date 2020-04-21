@@ -1,6 +1,12 @@
 import request from '@/utils/request'
 
-export function getRoleList(data) {
+export function getAllRoles() {
+    return request({
+        url: '/admin-user/role/all',
+        method: 'get'
+    })
+}
+export function queryRoleList(data) {
     return request({
         url: '/admin-user/role/list',
         method: 'post',
