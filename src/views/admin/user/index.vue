@@ -106,7 +106,8 @@
                      :current-page="listQuery.pageNum"
                      :page-sizes="[10, 20, 30, 50]"
                      :page-size="listQuery.pageSize"
-                     layout="total, sizes, prev, pager, next, jumper" :total="total">
+                     layout="total, sizes, prev, pager, next, jumper"
+                     :total="total">
       </el-pagination>
     </div>
 
@@ -187,8 +188,8 @@
         },
         // 用户状态
         userStatus: [
-          { value: "0", label: "启用" },
-          { value: "1", label: "停用" },
+          { value: '0', label: '启用' },
+          { value: '1', label: '停用' },
         ],
         roleList: [],
         dialogStatus: 'create',
@@ -232,8 +233,8 @@
       queryUserList() {
         this.listLoading = true
         queryUserList(this.listQuery).then(response => {
-          this.list = JSON.parse(response.data).records
-          this.total = JSON.parse(response.data).total
+          this.list = response.data.records
+          this.total = response.data.total
           this.listLoading = false
         })
       },
@@ -243,7 +244,7 @@
       getAllRoles(isShow) {
         if (isShow) {
           getAllRoles().then(response => {
-            this.roleList = JSON.parse(response.data)
+            this.roleList = response.data
           })
         }
       },
@@ -256,7 +257,7 @@
        * 修改每页显示条数
        */
       handleSizeChange(val) {
-        this.listQuery.size = val
+        this.listQuery.pageSize = val
         this.queryUserList()
       },
       /**
@@ -317,7 +318,7 @@
         this.listLoading = true
         getUser(id).then(response => {
           console.log("id:",id)
-          this.temp = JSON.parse(response.data)
+          this.temp = response.data
           this.listLoading = false
           this.dialogStatus = 'edit'
           this.dialogFormVisible = true

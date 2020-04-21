@@ -1,8 +1,13 @@
 import request from '@/utils/request'
 
-export function getToken() {
+/**
+ * 七牛云图片上传
+ */
+export function uploadImage(data) {
   return request({
-    url: '/qiniu/upload/token', // 假地址 自行替换
-    method: 'get'
+    url: '/file-server/upload/img', // 假地址 自行替换
+    method: 'post',
+    headers: { "Content-Type": "multipart/form-data" },
+    data
   })
 }

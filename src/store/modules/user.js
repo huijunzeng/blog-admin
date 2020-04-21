@@ -31,7 +31,7 @@ const actions = {
             const { username, password } = loginForm
             login({ username: username.trim(), password: password }).then(response => {
                 console.log("data: " + response.data);
-                const data = JSON.parse(response.data)
+                const data = response.data
                 commit('SET_TOKEN', data.access_token)
                 commit('SET_USERNAME', data.username)
                 setToken(data.access_token)

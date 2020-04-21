@@ -1,5 +1,10 @@
 import request from '@/utils/request'
 
+/**
+ * 根据条件获取资源信息列表
+ * @param data
+ * @returns {*}
+ */
 export function getResourceList(data) {
     return request({
         url: '/admin-user/resource/list',
@@ -8,6 +13,11 @@ export function getResourceList(data) {
     })
 }
 
+/**
+ * 根据用户名获取相应的资源集合
+ * @param username
+ * @returns {*}
+ */
 export function getResourceByUsername(username) {
     return request({
         url: '/admin-user/resource/user/' + username,
@@ -15,6 +25,11 @@ export function getResourceByUsername(username) {
     })
 }
 
+/**
+ * 根据用户id获取相应的资源集合
+ * @param userId
+ * @returns {*}
+ */
 export function getResourceByUserId(userId) {
     return request({
         url: '/admin-user/resource',
@@ -25,6 +40,10 @@ export function getResourceByUserId(userId) {
     })
 }
 
+/**
+ * 根据资源id获取指定资源信息
+ * @param id
+ */
 export function getResource(id) {
     return request({
         url: '/admin-user/resource/' + id,
@@ -32,6 +51,10 @@ export function getResource(id) {
     })
 }
 
+/**
+ * 新增资源
+ * @param data
+ */
 export function createResource(data) {
     return request({
         url: '/admin-user/resource',
@@ -40,6 +63,10 @@ export function createResource(data) {
     })
 }
 
+/**
+ * 更新资源信息
+ * @param data
+ */
 export function updateResource(data) {
     return request({
         url: '/admin-user/resource/' + data.id,
@@ -48,6 +75,10 @@ export function updateResource(data) {
     })
 }
 
+/**
+ * 根据id删除资源
+ * @param id
+ */
 export function deleteResource(id) {
     return request({
         url: '/admin-user/resource/' + id,
