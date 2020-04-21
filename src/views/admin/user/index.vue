@@ -18,7 +18,7 @@
       <el-select clearable
                  style="width: 90px"
                  class="filter-item"
-                 v-model="listQuery.status"
+                 v-model="listQuery.deleted"
                  placeholder="用户状态">
         <el-option v-for="item in userStatus"
                    :key="item"
