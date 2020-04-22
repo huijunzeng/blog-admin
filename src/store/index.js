@@ -6,12 +6,13 @@ import getters from './getters';
 Vue.use(Vuex)
 
 // https://webpack.js.org/guides/dependency-management/#requirecontext
+// 利用webpack的require.context来批量读取store/modules路径下的文件和文件内容；有三个参数，第一个表示读取的目录，第二个表示是否要循环读取子目录，第三表示匹配的正则。
 const modulesFiles = require.context('./modules', true, /\.js$/)
 
 // you do not need `import app from './modules/app'`
 // it will auto require all vuex module from modules file
 const modules = modulesFiles.keys().reduce((modules, modulePath) => {
-    // set './app.js' => 'app'
+    // 得到文件名，如'./app.js' => 'app'
     const moduleName = modulePath.replace(/^\.\/(.*)\.\w+$/, '$1')
     const value = modulesFiles(modulePath)
     modules[moduleName] = value.default

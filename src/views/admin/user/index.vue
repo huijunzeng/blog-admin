@@ -21,7 +21,7 @@
                  v-model="listQuery.deleted"
                  placeholder="用户状态">
         <el-option v-for="item in userStatus"
-                   :key="item"
+                   :key="item.value"
                    :label="item.label"
                    :value="item.value">
         </el-option>

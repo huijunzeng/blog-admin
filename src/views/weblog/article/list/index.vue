@@ -13,7 +13,7 @@
                  style="width: 120px" class="filter-item" placeholder="请选择分类"
                  @visible-change="getAllClassifications">
         <el-option v-for="item in classificationList"
-                   :key="item"
+                   :key="item.id"
                    :label="item.name"
                    :value="item.id">
         </el-option>
@@ -22,7 +22,7 @@
                  style="width: 120px" class="filter-item" placeholder="请选择标签"
                  @visible-change="getAllLabels">
         <el-option v-for="item in labelList"
-                   :key="item"
+                   :key="item.id"
                    :label="item.name"
                    :value="item.id">
         </el-option>
@@ -33,7 +33,7 @@
                  v-model="listQuery.visible"
                  placeholder="是否私密">
         <el-option v-for="item in visibleOptions"
-                   :key="item"
+                   :key="item.value"
                    :label="item.label"
                    :value="item.value">
         </el-option>
@@ -44,7 +44,7 @@
                  v-model="listQuery.deleted"
                  placeholder="请选择用户状态">
         <el-option v-for="item in articleStatus"
-                   :key="item"
+                   :key="item.value"
                    :label="item.label"
                    :value="item.value">
         </el-option>
@@ -109,7 +109,7 @@
         </template>
       </el-table-column>
 
-       <el-table-column width="120px" align="center" label="私密">
+       <el-table-column width="120px" align="center" label="权限">
           <template slot-scope="scope">
             <span>{{ formatVisible(scope.row.visible) }}</span>
           </template>
@@ -182,8 +182,8 @@
         },
         // 文章私密 是否私密不可见 0否 1是
         visibleOptions: [
-          { value: '0', label: '否' },
-          { value: '1', label: '是' },
+          { value: '0', label: '公开' },
+          { value: '1', label: '私密' },
         ],
         // 文章状态
         articleStatus: [
@@ -242,6 +242,10 @@
       handleFilter() {
         this.listQuery.pageNum = 1
         this.queryArticleList()
+      },
+      // 跳转至文章新增页面
+      handleCreate() {
+        this.$router.push('/weblog/article/create')
       },
       /**
        * 修改每页显示条数

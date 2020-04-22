@@ -15,15 +15,15 @@ VueRouter.prototype.push = function push (to) {
 // 基础路由集合（不需要权限） 定义请求路径跳转到指定的组件
 export const baseRoutes = [
     {
-        path: '',
-        component: Layout,
-        name: 'container',
-        redirect: 'home',
-        meta: {
+        path: '', //路径
+        component: Layout, //页面组件
+        name: 'container', //路由名称
+        redirect: 'home', //重定向
+        meta: { //自定义标签属性
             requiresAuth: true,
             title: '首页'
         },
-        children: [
+        children: [ //嵌套子路由
             {
                 id: 1,
                 path: 'home',

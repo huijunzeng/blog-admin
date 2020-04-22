@@ -14,7 +14,7 @@ const systemRouter = {
     //多级菜单的子路由
     children: [
         {
-            path: '/user',
+            path: '/admin/user',
             name: 'user-manage',
             component: () => import('@/views/admin/user'),
             meta: {
@@ -23,7 +23,7 @@ const systemRouter = {
             }
         },
         {
-            path: '/role',
+            path: '/admin/role',
             name: 'role-manage',
             component: () => import('@/views/admin/role'),
             meta: {
@@ -32,7 +32,7 @@ const systemRouter = {
             }
         },
         {
-            path: '/resource',
+            path: '/admin/resource',
             name: 'resource-manage',
             component: () => import('@/views/admin/resource'),
             meta: {
