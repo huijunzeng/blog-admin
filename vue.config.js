@@ -44,7 +44,7 @@ module.exports = {
         proxy: {
             [process.env.VUE_APP_BASE_API]: {
                 // 目标代理服务器地址
-                target: 'http://localhost:9800',
+                target: 'http://129.211.34.120:9800',
                 // 允许跨域
                 changeOrigin: true,
                 // 如果是https接口，需要配置这个参数为true

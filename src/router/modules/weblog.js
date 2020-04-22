@@ -14,16 +14,36 @@ const weblogRouter = {
     //多级菜单的子路由
     children: [
         {
-            path: 'article',
+            path: '/article',
             name: 'article-manage',
             component: () => import('@/views/weblog/article'),
             meta: {
                 title: '文章管理',
                 icon: 'table'
-            }
+            },
+            children: [
+                {
+                    path: '/list',
+                    name: 'article-list',
+                    component: () => import('@/views/weblog/article/list'),
+                    meta: {
+                        title: '文章列表',
+                        icon: 'table'
+                    }
+                },
+                {
+                    path: '/create',
+                    name: 'article-create',
+                    component: () => import('@/views/weblog/article/create'),
+                    meta: {
+                        title: '添加文章',
+                        icon: 'table'
+                    }
+                }
+            ]
         },
         {
-            path: 'comment',
+            path: '/comment',
             name: 'comment-manage',
             component: () => import('@/views/weblog/comment'),
             meta: {
