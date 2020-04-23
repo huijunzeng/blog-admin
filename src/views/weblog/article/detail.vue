@@ -109,22 +109,26 @@
         </template>
       </el-table-column>
 
-       <el-table-column width="120px" align="center" label="权限">
-          <template slot-scope="scope">
-            <span>{{ formatVisible(scope.row.visible) }}</span>
-          </template>
-       </el-table-column>
+      <el-table-column width="120px" align="center" label="权限">
+        <template slot-scope="scope">
+          <span>{{ formatVisible(scope.row.visible) }}</span>
+        </template>
+      </el-table-column>
 
-       <el-table-column width="120px" align="center" label="删除">
-          <template slot-scope="scope">
-            <span>{{ formatStatus(scope.row.deleted) }}</span>
-          </template>
-       </el-table-column>
+      <el-table-column width="120px" align="center" label="删除">
+        <template slot-scope="scope">
+          <span>{{ formatStatus(scope.row.deleted) }}</span>
+        </template>
+      </el-table-column>
 
       <el-table-column align="center" label="操作" width="200">
         <template slot-scope="scope">
           <el-button type="primary" size="mini" @click="handleDetail(scope.row.id)">
             查看详情
+          </el-button>
+          <!--<router-link  :to="`/weblog/article/detail/${scope.row.id}`" :key="scope.row.id" class="around">查看详情</router-link>-->
+          <el-button type="danger" size="mini" @click="handleUpdate(scope.row.id)">
+            编辑
           </el-button>
           <el-button type="danger" size="mini" @click="deleteData(scope.row.id)">
             删除
@@ -260,6 +264,18 @@
       handleCurrentChange(val) {
         this.listQuery.pageNum = val
         this.queryArticleList()
+      },
+      /**
+       * 跳转文章详情页面
+       */
+      handleDetail(id) {
+        this.$router.push({path:'/weblog/article/detail/' + id})
+      },
+      /**
+       * 跳转编辑文章页面
+       */
+      handleUpdate(id) {
+        this.$router.push({path:'/weblog/article/update/' + id})
       },
       /**
        * 删除文章

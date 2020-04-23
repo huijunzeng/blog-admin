@@ -26,7 +26,7 @@ export const baseRoutes = [
         children: [ //嵌套子路由
             {
                 id: 1,
-                path: 'home',
+                path: 'home', //子路由路径  不以/开头时，会自动拼接在上级路由路径后面；若以/开头，则访问路径为该值
                 component: () => import('@/views/home/index'), //配置路由懒加载，优化首屏加载缓慢
                 name: 'home',
                 meta: {
@@ -44,7 +44,8 @@ export const baseRoutes = [
     },
     {
         path: '/login',
-        component: () => import('@/views/login/index')
+        component: () => import('@/views/login/index'),
+        hidden: true
     },
     {
         path: '/404',
