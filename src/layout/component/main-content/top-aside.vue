@@ -2,7 +2,7 @@
     <aside class="aside__top">
         <span
             class="iconfont icon-nav toggleNavCollapse"
-            :class="{active:isSidebarNavCollapse}"
+            :class="{active:sidebarNavCollapse}"
             @click="toggleNavCollapse"
         >
         </span>
@@ -24,7 +24,7 @@
         <div class="aside__top--right">
             <div class="user-msg">
                 <img class="user-img" :src="avatar" alt="">
-                <span class="user-name">{{account}}</span>
+                <span class="user-name">{{username}}</span>
                 <el-dropdown trigger="click" placement="top">
                     <span class="el-dropdown-link">
                         <i class="el-icon-arrow-down el-icon--right"></i>
@@ -35,7 +35,7 @@
                     </el-dropdown-menu>
                 </el-dropdown>
             </div>
-            <div class="quit-system" @click="loginOut">
+            <div class="quit-system" @click="logout">
                 <span class="iconfont icon-quit"></span>
             </div>
         </div>
@@ -43,22 +43,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     data() {
         return {}
     },
     computed: {
-        ...mapState(['isSidebarNavCollapse', 'crumbList']),
-        ...mapState('permission', ['avatar', 'account'])
+        ...mapGetters(['sidebarNavCollapse', 'crumbList', 'avatar', 'username']),
     },
     methods: {
+        // 导航菜单折叠切换
         toggleNavCollapse() {
-            this.$store.commit('toggleNavCollapse')
+            this.$store.dispatch('view/toggleNavCollapse')
+
         },
-        loginOut() {
-            this.$store.commit('LOGIN_OUT')
+        // 用户退出登录
+        logout() {
+            this.$store.dispatch('user/logout')
             /* 防止切换角色时addRoutes重复添加路由导致出现警告 */
             window.location.reload()
         }

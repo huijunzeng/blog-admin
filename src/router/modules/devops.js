@@ -26,7 +26,7 @@ const devopsRouter = {
             name: 'Swagger',
             component: () => import('@/views/devops/swagger'),
             meta: {
-                title: 'swagger接口文档',
+                title: 'API接口文档',
                 icon: 'link'
             }
         },
@@ -62,7 +62,7 @@ const devopsRouter = {
             name: 'skywalking',
             component: () => import('@/views/devops/skywalking'),
             meta: {
-                title: '链路追踪系统',
+                title: '应用性能管理',
                 icon: 'link'
             }
         },

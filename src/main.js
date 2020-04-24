@@ -14,7 +14,7 @@ require('@/mock/mock.js')
 // 阻止启动生产消息，常用作指令
 Vue.config.productionTip = false
 
-// 注册插件  这里项目ui使用element-ui完整插件（包含多个组件，用Vue.use可以一次性全部注册，也可以用Vue.component一个一个地注册需要用到的组件）  第一个是参数是要注册的插件名，第二个参数是全局配置项options，该对象目前支持 size 与 zIndex 字段。size 用于改变组件的默认尺寸，zIndex 设置弹框的初始 z-index（默认值：2000）
+// 注册插件  这里项目ui使用element-ui完整插件（包含多个组件，用Vue.use可以一次性全部注册，也可以用Vue.component一个一个地注册需要用到的组件）  第一个是参数是要注册的插件名，第二个参数是全局配置项options，该对象目前支持 size 与 zIndex 字段。size 用于改变组件的默认尺寸，zIndex 设置弹框的初始 z-index 堆叠顺序（默认值：2000）
 Vue.use(ElementUI, {
     size: 'medium', // set element-ui default size
     zIndex: 3000 // set element-ui default zIndex
@@ -27,28 +27,23 @@ Vue.use(mavonEditor);
 // next: Function: 确保要调用 next 方法，否则钩子就不会被resolved。这个当中还可以传一些参数，具体可以看官方文档
 //const test = ((to, from, next) => {
 router.beforeEach((to, from, next) => {
-    console.log("start permission")
     to.matched.forEach(record => console.log(record.name))
     NProgress.start() //显示进度条
     if (store.state.user.token) {// 有token
-        console.log("token：", store.state.user.token)
         if (store.state.permission.permissionList) {// 有生成动态路由
-            console.log("store.state.permission.permissionList：", store.state.permission.permissionList)
-            console.log("to.path：", to.path)
             if (to.path !== '/login') {
                 next()
                 NProgress.done() //完成进度条
             } else {
                 // fullPath匹配路由，path匹配路径
-                console.log("from.fullPath：", from.fullPath)
                 next(from.fullPath)
                 NProgress.done() //完成进度条
             }
         } else {
             // 没有生成动态路由则根据username重新获取路由集合
-            const username = store.state.user.username;
+            store.dispatch('user/getUserInfo')
+            const username = store.state.user.username
             store.dispatch('permission/FETCH_PERMISSION', username).then(() => {
-                console.log("to.path：", to.path)
                 next({path: to.path})
                 NProgress.done() //完成进度条
             })
@@ -59,14 +54,18 @@ router.beforeEach((to, from, next) => {
             next()
             NProgress.done() //完成进度条
         } else {// 需要权限
-            console.log("login：")
             next({ path: '/login' })
             NProgress.done() //完成进度条
         }
     }
 })
 
-router.afterEach(() => {
+router.afterEach((to) => {
+    // 添加面包屑
+    const routerList = to.matched
+    store.dispatch('view/setCrumbList', routerList)
+    // 当前导航菜单名称
+    store.dispatch('permission/setCurrentMenu', to.name)
     // finish progress bar
     NProgress.done() //完成进度条
 })

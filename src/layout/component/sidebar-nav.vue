@@ -1,6 +1,6 @@
 <template>
     <el-menu
-        :collapse="isSidebarNavCollapse"
+        :collapse="sidebarNavCollapse"
         background-color="#304156"
         text-color="#eee"
         active-text-color="#4dbcff"
@@ -12,7 +12,7 @@
 
 <script>
 import DynamicMenu from './dynamic-menu'
-import { mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 
 export default {
     data() {
@@ -21,8 +21,7 @@ export default {
         }
     },
     computed: {
-        ...mapState(['isSidebarNavCollapse']),
-        ...mapState('permission', ['sidebarMenu', 'currentMenu'])
+        ...mapGetters(['sidebarNavCollapse', 'sidebarMenu', 'currentMenu'])
     },
     methods: {},
     components: {

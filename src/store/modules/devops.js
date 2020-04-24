@@ -1,4 +1,7 @@
-const state = {
+// 服务治理模块
+export default {
+  namespaced: true, //开启命名空间
+  state: {
     // nacos注册与配置中心
     nacosServer: 'http://129.211.34.120:8848/nacos/#/login',
     // swagger
@@ -15,9 +18,5 @@ const state = {
     sentinelDashboard: 'http://129.211.34.120:8088',
     // xxl-job
     xxljobDashboard: 'http://129.211.34.120:9090/xxl-job-admin/'
-}
-
-export default {
-  namespaced: true,
-  state
+  }
 }

@@ -6,16 +6,16 @@
 </template>
 
 <script>
-import TopAside from './top-aside'
-import Content from './content'
-import { mapState } from 'vuex'
+import TopAside from './top-aside' //头部用户信息 登出组件
+import Content from './content' //中间内容组件
+import { mapGetters } from 'vuex'
 
 export default {
     data() {
         return {}
     },
     computed: {
-        ...mapState(['isSidebarNavCollapse'])
+        ...mapGetters(['sidebarNavCollapse'])
     },
     components: {
         TopAside,

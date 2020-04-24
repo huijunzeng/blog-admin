@@ -79,7 +79,7 @@ export default {
         },
         async loginHandler() {
             console.log(this.loginForm.username)
-            this.$store.dispatch('user/login', this.loginForm)
+            this.$store.dispatch('user/userLogin', this.loginForm)
                 .then(() => {
                     this.$router.push('/') //登录成功后重定向到首页
                     this.loading = false

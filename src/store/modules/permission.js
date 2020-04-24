@@ -1,8 +1,9 @@
-import { getResourceByUsername } from '@/api/admin-user/resource'
+import { getResourceByUsername } from '@/api/admin/resource'
 import router, { baseRoutes, dynamicRoutes } from '@/router/index'
 
+// 权限路由
 export default {
-    namespaced: true,
+    namespaced: true, //开启命名空间
     state: {
         permissionList: null /** 所有路由 */,
         sidebarMenu: [] /** 导航菜单 */,
@@ -33,8 +34,8 @@ export default {
     actions: {
         async FETCH_PERMISSION({ commit }, username) {
             console.log("username: " , username);
-            let response = await getResourceByUsername(username)
-            console.log("permissionList: " , response.data);
+            /*let response = await getResourceByUsername(username)
+            console.log("permissionList: " , response.data);*/
             //let routes = recursionRouter(JSON.parse(response.data), dynamicRoutes)
             let routes = baseRoutes.concat(dynamicRoutes)
             console.log("dynamicRoutes: " , dynamicRoutes);
@@ -55,6 +56,10 @@ export default {
             router.addRoutes(children)
             //commit('SET_PERMISSION', [...initialRoutes, ...dynamicRoutes])
             commit('SET_PERMISSION', children)
+        },
+        // 当前导航菜单名称
+        setCurrentMenu({ commit }, currentMenu) {
+            commit('SET_CURRENT_MENU', currentMenu)
         }
     }
 }
@@ -71,7 +76,7 @@ export function recursionRouter(userRouter = [], allRouter = []) {
     for (let i = 0; i < allRouter.length; i++) {
         console.log("allRouter: " + allRouter[i].name)
     }
-    console.log("8888888888888:" + userRouter.includes('admin-user'))
+    console.log("8888888888888:" + userRouter.includes('admin'))
     var realRoutes = allRouter
         .filter(item => userRouter.includes(item.name))
         .map(item => ({

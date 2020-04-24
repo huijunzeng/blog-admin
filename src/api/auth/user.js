@@ -23,23 +23,26 @@ export function login(data) {
 }
 
 /**
- * 获取用户信息
+ * 验证并解析token
  * @param username
  */
-export function getUserInfo(username) {
+export function checkToken(token) {
     return request({
-        url: '/admin-user/user',
+        url: '/authorization-server/oauth/check_token',
         method: 'get',
-        params: { username: username }
+        params: {
+            token: token
+        }
     })
 }
 
 /**
  * 登出
  */
-export function logout() {
+export function logout(token) {
     return request({
-        url: '/user/logout',
-        method: 'post'
+        url: '/authorization-server/oauth/token',
+        method: 'delete',
+        params: { token: token }
     })
 }

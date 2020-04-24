@@ -1,46 +1,44 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
-import { login, logout, getUserInfo } from '@/api/auth/user'
-import router from '@/router'
+import { login, logout, checkToken } from '@/api/auth/user'
 
-const state = {
-    token: getToken(),
-    username: '',
-    avatar: '', // 头像
-    roles: [] // 用户角色
-}
-
-const mutations = {
-    SET_TOKEN: (state, token) => {
-        state.token = token
+// 用户模块
+export default {
+    namespaced: true, //开启命名空间
+    state: {
+        token: getToken(), //为了避免用户刷新页面vuex数据丢失，需要把token保存到storage，每次拿数据时从storage获取
+        username: '',
+        avatar: '', // 头像
+        roles: [] // 用户角色
     },
-    SET_USERNAME: (state, username) => {
-        state.username = username
+    mutations: {
+        SET_TOKEN: (state, token) => {
+            state.token = token
+        },
+        SET_USERNAME: (state, username) => {
+            state.username = username
+        },
+        SET_AVATAR: (state, avatar) => {
+            state.avatar = avatar
+        },
+        SET_ROLES: (state, roles) => {
+            state.roles = roles
+        }
     },
-    SET_AVATAR: (state, avatar) => {
-        state.avatar = avatar
-    },
-    SET_ROLES: (state, roles) => {
-        state.roles = roles
-    }
-}
-
-const actions = {
-    // user login
-    login({ commit }, loginForm) {
-        return new Promise((resolve, reject) => {
-            const { username, password } = loginForm
-            login({ username: username.trim(), password: password }).then(response => {
-                console.log("data: " + response.data);
-                const data = response.data
-                commit('SET_TOKEN', data.access_token)
-                commit('SET_USERNAME', data.username)
-                setToken(data.access_token)
-                resolve()
-            }).catch(error => {
-                console.error(error)
-                reject(error)
+    actions: {
+        // 用户登录，只验证用户是否登录成功，成功则只保存token到storage，再在跳转路由时（首次登录成功后跳转即获取用户信息）判断是否需要调取用户信息接口获取用户信息（解决刷新页面vuex数据丢，在之后碰到用户刷新页面时，就再次发送token到后端获取用户信息）
+        userLogin({ commit }, loginForm) {
+            return new Promise((resolve, reject) => {
+                const { username, password } = loginForm
+                login({ username: username.trim(), password: password }).then(response => {
+                    const data = response.data
+                    commit('SET_TOKEN', data.access_token)
+                    setToken(data.access_token)
+                    resolve()
+                }).catch(error => {
+                    console.error(error)
+                    reject(error)
+                })
             })
-        })
             /*console.log("response.data: " + response.data)
             let data = response.data
             // 将token保存到storage
@@ -52,91 +50,82 @@ const actions = {
             //commit('SET_AVATAR', permissionList.avatar)
             //commit('SET_ACCOUNT', permissionList.name)
             this.$router.replace('/')*/
-    },
+        },
 
-    // get user info
-   /* getInfo({ commit, state }) {
-        return new Promise((resolve, reject) => {
-            getInfo(state.token).then(response => {
-                const { data } = response
+        // 验证token并解析获取用户基本信息
+         getUserInfo({ commit, state }) {
+             return new Promise((resolve, reject) => {
+                 checkToken(state.token).then(response => {
+                     const data = response.data
+                     if (!data) {
+                         reject('Verification failed, please Login again.')
+                     } else if (!data.active) {
+                         reject('Token failure, please Login again.')
+                     }
+                     const { user_name, roles } = data
+                     if (!roles || roles.length <= 0) {
+                       reject('getInfo: roles must be a non-null array!')
+                     }
+                     commit('SET_ROLES', roles)
+                     commit('SET_USERNAME', user_name)
+                     commit('SET_AVATAR', '')
+                     resolve()
+                 }).catch(error => {
+                     reject(error)
+                 })
+             })
+         },
 
-                if (!data) {
-                    reject('Verification failed, please Login again.')
-                }
+         // 用户退出登录
+         logout({ commit, state }) {
+             return new Promise((resolve, reject) => {
+                 console.log('token8888；', state.token)
+                 logout(state.token).then(() => {
+                     console.log('logout 111；')
+                     commit('SET_TOKEN', '')
+                     commit('SET_ROLES', [])
+                     removeToken()
+                     //resetRouter()
+                     resolve()
+                 }).catch(error => {
+                     reject(error)
+                 })
+             })
+         },
 
-                const { name, description } = data
+         // remove token
+         resetToken({ commit }) {
+             return new Promise(resolve => {
+                 commit('SET_TOKEN', '')
+                 commit('SET_ROLES', [])
+                 removeToken()
+                 resolve()
+             })
+         },
 
-                // roles must be a non-empty array
-                // if (!roleIds || roleIds.length <= 0) {
-                //   reject('getInfo: roles must be a non-null array!')
-                // }
+         // dynamically modify permissions
+         /*changeRoles({ commit, dispatch }, role) {
+             return new Promise(async resolve => {
+                 const token = role + '-token'
 
-                commit('SET_ROLES', ['admin'])
-                commit('SET_NAME', name)
-                commit('SET_AVATAR', 'https://avatars3.githubusercontent.com/u/3946731?s=460&v=4')
-                commit('SET_INTRODUCTION', description)
-                data.roles = ['admin']
-                resolve(data)
-            }).catch(error => {
-                reject(error)
-            })
-        })
-    },
+                 commit('SET_TOKEN', token)
+                 setToken(token)
 
-    // user logout
-    logout({ commit, state }) {
-        return new Promise((resolve, reject) => {
-            logout(state.token).then(() => {
-                commit('SET_TOKEN', '')
-                commit('SET_ROLES', [])
-                removeToken()
-                resetRouter()
-                resolve()
-            }).catch(error => {
-                reject(error)
-            })
-        })
-    },
+                 const { roles } = await dispatch('getInfo')
 
-    // remove token
-    resetToken({ commit }) {
-        return new Promise(resolve => {
-            commit('SET_TOKEN', '')
-            commit('SET_ROLES', [])
-            removeToken()
-            resolve()
-        })
-    },
+                 resetRouter()
 
-    // dynamically modify permissions
-    changeRoles({ commit, dispatch }, role) {
-        return new Promise(async resolve => {
-            const token = role + '-token'
+                 // generate accessible routes map based on roles
+                 const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
 
-            commit('SET_TOKEN', token)
-            setToken(token)
+                 // dynamically add accessible routes
+                 router.addRoutes(accessRoutes)
 
-            const { roles } = await dispatch('getInfo')
+                 // reset visited views and cached views
+                 dispatch('tagsView/delAllViews', null, { root: true })
 
-            resetRouter()
-
-            // generate accessible routes map based on roles
-            const accessRoutes = await dispatch('permission/generateRoutes', roles, { root: true })
-
-            // dynamically add accessible routes
-            router.addRoutes(accessRoutes)
-
-            // reset visited views and cached views
-            dispatch('tagsView/delAllViews', null, { root: true })
-
-            resolve()
-        })
-    }*/
-}
-
-export default {
-    namespaced: true,
-    state,
-    mutations,
-    actions
+                 resolve()
+             })
+         }*/
+    }
 }
