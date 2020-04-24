@@ -13,7 +13,7 @@ const devopsRouter = {
     },
     children: [
         {
-            path: '/devops/nacos',
+            path: 'nacos',
             name: 'Register',
             component: () => import('@/views/devops/nacos'),
             meta: {
@@ -22,7 +22,7 @@ const devopsRouter = {
             }
         },
         {
-            path: '/devops/swagger',
+            path: 'swagger',
             name: 'Swagger',
             component: () => import('@/views/devops/swagger'),
             meta: {
@@ -31,7 +31,7 @@ const devopsRouter = {
             }
         },
         {
-            path: '/devops/portainer',
+            path: 'portainer',
             name: 'Portainer',
             component: () => import('@/views/devops/portainer'),
             meta: {
@@ -40,7 +40,7 @@ const devopsRouter = {
             }
         },
         {
-            path: '/devops/rabbitmq',
+            path: 'rabbitmq',
             name: 'RabbitMQ',
             component: () => import('@/views/devops/rabbitmq'),
             meta: {
@@ -49,7 +49,7 @@ const devopsRouter = {
             }
         },
         {
-            path: '/devops/elk',
+            path: 'elk',
             name: 'ELK',
             component: () => import('@/views/devops/elk'),
             meta: {
@@ -58,7 +58,7 @@ const devopsRouter = {
             }
         },
         {
-            path: '/devops/skywalking',
+            path: 'skywalking',
             name: 'skywalking',
             component: () => import('@/views/devops/skywalking'),
             meta: {
@@ -67,7 +67,7 @@ const devopsRouter = {
             }
         },
         {
-            path: '/devops/sentinel',
+            path: 'sentinel',
             name: 'sentinel',
             component: () => import('@/views/devops/sentinel'),
             meta: {
@@ -76,7 +76,7 @@ const devopsRouter = {
             }
         },
         {
-            path: '/devops/xxljob',
+            path: 'xxljob',
             name: 'xxljob',
             component: () => import('@/views/devops/xxljob'),
             meta: {
