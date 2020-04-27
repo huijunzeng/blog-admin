@@ -61,8 +61,8 @@ export default {
         // 用户退出登录
         logout() {
             this.$store.dispatch('user/logout')
-            /* 防止切换角色时addRoutes重复添加路由导致出现警告 */
-            window.location.reload()
+            // 防止切换角色时addRoutes重复添加路由导致出现警告
+            //window.location.reload()
         }
     }
 }

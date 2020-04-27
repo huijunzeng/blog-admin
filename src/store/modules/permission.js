@@ -28,6 +28,7 @@ export default {
             state.currentMenu = currentMenu
         },
         SET_CONTROL_LIST(state, list) {
+            console.log(9527)
             state.control_list = list
         }
     },
@@ -76,7 +77,6 @@ export function recursionRouter(userRouter = [], allRouter = []) {
     for (let i = 0; i < allRouter.length; i++) {
         console.log("allRouter: " + allRouter[i].name)
     }
-    console.log("8888888888888:" + userRouter.includes('admin'))
     var realRoutes = allRouter
         .filter(item => userRouter.includes(item.name))
         .map(item => ({

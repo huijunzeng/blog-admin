@@ -1,5 +1,6 @@
 import { getToken, setToken, removeToken } from '@/utils/auth'
 import { login, logout, checkToken } from '@/api/auth/user'
+import { resetRouter } from '@/router'
 
 // 用户模块
 export default {
@@ -39,17 +40,6 @@ export default {
                     reject(error)
                 })
             })
-            /*console.log("response.data: " + response.data)
-            let data = response.data
-            // 将token保存到storage
-            let token = JSON.parse(data).access_token
-            console.log("token: " + token)
-            this.$store.dispatch('user/setToken', token)
-            setToken(token)
-            // 登录成功后，路由到首页
-            //commit('SET_AVATAR', permissionList.avatar)
-            //commit('SET_ACCOUNT', permissionList.name)
-            this.$router.replace('/')*/
         },
 
         // 验证token并解析获取用户基本信息
@@ -84,8 +74,10 @@ export default {
                      console.log('logout 111；')
                      commit('SET_TOKEN', '')
                      commit('SET_ROLES', [])
+                     this.$store.commit('SET_CONTROL_LIST', [])
+                     this.$store.commit('SET_MENU', [])
                      removeToken()
-                     //resetRouter()
+                     resetRouter()
                      resolve()
                  }).catch(error => {
                      reject(error)

@@ -31,6 +31,7 @@ export const getStore = (name, isConversion = false) => {
  */
 export const removeStore = name => {
     if (!name) return;
+    console.log('removeStore')
     window.localStorage.removeItem(name)
 }
 

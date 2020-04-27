@@ -41,8 +41,7 @@ export function checkToken(token) {
  */
 export function logout(token) {
     return request({
-        url: '/authorization-server/oauth/token',
-        method: 'delete',
-        params: { token: token }
+        url: '/authorization-server/oauth/token/' + token,
+        method: 'delete'
     })
 }
