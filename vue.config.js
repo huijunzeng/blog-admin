@@ -3,6 +3,13 @@
 // path是node.js的路径模块，用来处理路径统一的问题
 const path = require('path')
 
+//引入打zip包的依赖
+const FileManagerPlugin = require('filemanager-webpack-plugin');
+const date = require('silly-datetime');
+const ts = date.format(new Date(), 'YYYYMMDDHHmmss');
+// 路径根据自己项目修改
+const projectName = __dirname.slice(path.resolve(__dirname, '../').length + 1);
+
 function resolve(dir) {
     return path.join(__dirname, dir)
 }
@@ -92,6 +99,22 @@ module.exports = {
     chainWebpack: config => {
         // 移除 prefetch 插件,解决组件懒加载失效的问题
         config.plugins.delete('prefetch')
+        if (process.env.NODE_ENV ===  'production') {
+            config.plugin('compress')
+                .use(FileManagerPlugin, [{
+                    onEnd: {
+                        delete: [
+                            './dist/*.zip'
+                        ],
+                        archive: [
+                            {
+                                source: './dist',
+                                destination: `./dist/dist-${ts}-${projectName}.zip`
+                            }
+                        ]
+                    }
+                }]);
+        }
         // 添加新的svg-sprite-loader处理svgIcon
         config.module
             .rule('svgIcon')
@@ -112,5 +135,5 @@ module.exports = {
             .rule('svg')
             .exclude.add(resolve('src/icons'))
             .end()
-    }
+    },
 }
